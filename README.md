@@ -1,2 +1,2 @@
 # Cart253
-class project
+This is Pippin Barr’s coursework repository for CART253
