@@ -62,6 +62,22 @@ let bird = {
 
 };
 
+//how random randome is
+let randomevalue = {
+    a: 0,
+    b: 0,
+    c: 0,
+    d: 0,
+    e: 0,
+    f: 0,
+    g: 0,
+    h: 0,
+    i: 0,
+    j: 0,
+    k: 0,
+    l: 0,
+
+}
 
 
 /**
@@ -81,14 +97,21 @@ function draw() {
     push();
     noStroke();
     fill(constrain(mrFurious.fill.r += 1, 0, 255),constrain(mrFurious.fill.g -= 1, 105, 255),constrain(mrFurious.fill.b -= 1, 105, 255));
-    ellipse(mrFurious.x, mrFurious.y, constrain(mrFurious.size += random(-5, 5), 0, 400));
+    ellipse(mrFurious.x, mrFurious.y, mrFurious.size);
+
+    mrFurious.size = constrain(mrFurious.size += random(-5 , 5), 50, 400)
+    
     pop();
 
   // draw the bird
     push();
     stroke(0);
-    fill(constrain(bird.fill.r += random(-5, 5), 50, 255),constrain(bird.fill.g += random(-5, 5), 50, 255),constrain(bird.fill.b += random(-5, 5), 50, 255));
+    fill(bird.fill.r,bird.fill.g,bird.fill.b);
     
+    bird.fill.r = constrain(bird.fill.r += random(randomevalue.a += random(-5, 3), randomevalue.b += random(-5, 8)), 50, 255)
+    bird.fill.g = constrain(bird.fill.g += random(randomevalue.c += random(-3, 4), randomevalue.d += random(-2, 1)), 50, 255)
+    bird.fill.b = constrain(bird.fill.b += random(randomevalue.e += random(-9, 3), randomevalue.f += random(-6, 7)), 50, 255)
+
     ellipse(bird.x - 2,bird.y,bird.beak.size,bird.beak.height);
     ellipse(bird.x,bird.y,bird.body.size,bird.body.height);
     ellipse(bird.x + 3,bird.y,bird.wing.size,bird.wing.height);
@@ -96,5 +119,6 @@ function draw() {
     bird.x = constrain(bird.x - random(-5, 5), 40, 360);
     bird.y = constrain(bird.y + random(-5, 5), 20, 150);
 
+    print(mrFurious.size)
     pop();
 }
