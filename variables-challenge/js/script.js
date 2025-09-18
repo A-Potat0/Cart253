@@ -21,6 +21,17 @@ let mrFurious = {
   }
 };
 
+// sky settings
+let sky = {
+    //colour
+    fill: {
+        r: 160,
+        g: 180,
+        b: 200,
+    }
+
+}
+
 /**
  * Create the canvas
  */
@@ -32,12 +43,12 @@ function setup() {
  * Draw (and update) Mr. Furious
  */
 function draw() {
-  background(160, 180, 200);
+  background(constrain(sky.fill.r -= 0.1, 0, 160), constrain(sky.fill.g -= 0.1, 50, 180), constrain(sky.fill.b -= 0.1, 100, 200));
   
   // Draw Mr. Furious as a coloured circle
-  push();
-  noStroke();
-  fill(mrFurious.fill.r, mrFurious.fill.g, mrFurious.fill.b);
-  ellipse(mrFurious.x, mrFurious.y, mrFurious.size);
-  pop();
+    push();
+    noStroke();
+    fill(constrain(mrFurious.fill.r += 1, 0, 255),constrain(mrFurious.fill.g -= 1, 105, 255),constrain(mrFurious.fill.b -= 1, 105, 255));
+    ellipse(mrFurious.x, mrFurious.y, mrFurious.size);
+    pop();
 }
