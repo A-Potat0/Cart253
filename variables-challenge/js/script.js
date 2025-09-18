@@ -34,24 +34,21 @@ let sky = {
 
 //bird settings
 let bird = {
-   // Body Position and size
+   // bird Position 
+    x: 200,
+    y: 100,
+   // Body ize
    body: {
-     x: 200,
-     y: 100,
      size: 25,
      height: 15,
    },
-   //Wing Position and size
+   //Wing size
    wing: {
-     x: 202,
-     y: 100,
      size: 10,
      height: 5,
    },
-   //beak Position and size
+   //beak size
   beak: {
-     x: 197,
-     y: 100,
      size: 30,
      height: 5,
    },
@@ -84,17 +81,20 @@ function draw() {
     push();
     noStroke();
     fill(constrain(mrFurious.fill.r += 1, 0, 255),constrain(mrFurious.fill.g -= 1, 105, 255),constrain(mrFurious.fill.b -= 1, 105, 255));
-    ellipse(mrFurious.x, mrFurious.y, mrFurious.size);
+    ellipse(mrFurious.x, mrFurious.y, constrain(mrFurious.size += random(-5, 5), 0, 400));
     pop();
 
   // draw the bird
     push();
-    stroke(0)
-    fill(bird.fill.r,bird.fill.g,bird.fill.b)
+    stroke(0);
+    fill(constrain(bird.fill.r += random(-5, 5), 50, 255),constrain(bird.fill.g += random(-5, 5), 50, 255),constrain(bird.fill.b += random(-5, 5), 50, 255));
     
-    ellipse(bird.beak.x,bird.beak.y,bird.beak.size,bird.beak.height)
-    ellipse(bird.body.x,bird.body.y,bird.body.size,bird.body.height)
-    ellipse(bird.wing.x,bird.wing.y,bird.wing.size,bird.wing.height)
-  
+    ellipse(bird.x - 2,bird.y,bird.beak.size,bird.beak.height);
+    ellipse(bird.x,bird.y,bird.body.size,bird.body.height);
+    ellipse(bird.x + 3,bird.y,bird.wing.size,bird.wing.height);
+
+    bird.x = constrain(bird.x - random(-5, 5), 40, 360);
+    bird.y = constrain(bird.y + random(-5, 5), 20, 150);
+
     pop();
 }
