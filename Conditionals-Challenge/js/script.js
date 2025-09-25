@@ -7,10 +7,14 @@
  */
 
 const puck = {
-  x: 200,
-  y: 200,
+  x: 400,
+  y: 400,
   size: 100,
-  fill: "#ff0000"
+  fill: "#ff0000",
+  fills: {
+    noOverlap: "#ff0000", // red for no overlap
+    overlap: "#00ff00" // green for overlap
+  }
 };
 
 const user = {
@@ -24,7 +28,7 @@ const user = {
  * Create the canvas
  */
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(800, 800);
 }
 
 /**
@@ -35,10 +39,19 @@ function draw() {
   
   // Move user circle
   moveUser();
+
+  // Move puck
+  movePuck()
   
+  // Move target
+  moveTarget()
+
   // Draw the user and puck
   drawUser();
   drawPuck();
+
+  //draw target
+  drawTarget();
 }
 
 /**
@@ -48,6 +61,97 @@ function moveUser() {
   user.x = mouseX;
   user.y = mouseY;
 }
+
+//check the overlapping of the circiles
+function movePuck() {
+    // Check overlap
+  
+  const diffX = abs(puck.x - user.x) /10
+  const diffY = abs(puck.y - user.y) /10
+  
+  // Calculate distance between circles' centres
+  const d = dist(user.x, user.y, puck.x, puck.y);
+  // Check if that distance is smaller than their two radii, 
+  // because if it is, they are overlapping by the amazing
+  // power of geometry!
+  const overlap = (d < user.size/2 + puck.size/2);
+  // Set fill based on whether they overlap
+  if (overlap && user.x < puck.x && user.y < puck.y) {
+    puck.x = puck.x + diffX;
+    puck.y = puck.y + diffY;
+  }
+  else if (overlap && user.x > puck.x && user.y > puck.y) {
+    puck.x = puck.x - diffX;
+    puck.y = puck.y - diffY;
+  }
+  else if (overlap && user.x < puck.x && user.y > puck.y) {
+    puck.x = puck.x + diffX;
+    puck.y = puck.y - diffY;
+  }
+  else if (overlap && user.x > puck.x && user.y < puck.y){
+    puck.x = puck.x - diffX;
+    puck.y = puck.y + diffY;
+  }
+  
+
+}
+
+// moving both targets
+function moveTarget() {
+  const newX = target.x + random();
+  const newY = target.y + random();
+  target.x = newX,
+  target2.x = newX,
+  target.y = newY,
+  target2.y = newY
+}
+
+function drawTarget() {
+     const d = dist(target.x, target.y, puck.x, puck.y);
+    const overlap = (d < puck.size / 2 + target.size / 2);
+    // Check if that distance is smaller than their two radii, 
+    // because if it is, they are overlapping
+    if (overlap) {
+        target.fill = target.fills.overlap;
+        target2.fill = target2.fills.overlap;
+    }
+    else {
+       target.fill = target.fills.noOverlap;
+       target2.fill = target2.fills.noOverlap;
+    }
+
+ 
+  push();
+    fill(target.fill)
+    ellipse(target.x, target.y, target.size);
+    fill(target2.fill)
+    ellipse(target2.x, target2.y, target2.size / 2);
+    pop();
+
+
+}
+
+let target = {
+    x: 150,
+    y: 50,
+    size: 50,
+    fills: {
+      noOverlap: "#fff",
+      overlap: "#00ff00"
+    }
+}
+
+let target2 = {
+    x: 150,
+    y: 50,
+    size: 50,
+    fills: {
+      noOverlap: "#ff0000",
+      overlap: "#ff00ff"
+    }
+
+}
+
 
 /**
  * Displays the user circle
